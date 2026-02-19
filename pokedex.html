@@ -11,29 +11,30 @@
 
     <body>
         <h1>Bits of Good Mid-Semester Project</h1>
-        <div id="pictureBox"></div>
-        <div id="name"></div>
-        <div id="types">Types:</div>
 
-        <div class="boxContainer left">
-            <button id="leftClick" aria-label="Previous"></button>
-        </div>
-        
-        <div class="boxContainer right">
-            <button id="rightClick" aria-label="Next"></button>
-        </div>
-        
-        
-        <div id="infoInterface">
-            <h5 id="title"></h5>
-            <div id="details"></div>
-            <div id="infobuttons">
-                <button class="infoMoves" id="info">Info</button>
-                <button class="infoMoves" id="moves">Moves</button>
+        <div id="mainLayout">
+            <div id="leftside">
+                <div id="pictureBox"></div>
+                <div id="nameBox"></div>
+                <div id="typeBox">Types:</div>
+                <div id="Controls">
+                    <div class="boxContainer">
+                        <button id="leftClick" aria-label="Previous"></button>
+                        <button id="rightClick" aria-label="Next"></button>
+                    </div>
+                </div>
             </div>
-            
-        </div>
 
+            <div id="rightside">
+                <div id="infoInterface">
+                    <h5 id="title">Info</h5>
+                    <div id="details"></div>
+                    <div id="infobuttons">
+                        <button class="infoMoves" id="info">Info</button>
+                        <button class="infoMoves" id="moves">Moves</button>
+                    </div>
+            </div>
+        </div>
 
         <script src="inter.js"></script>
     </body>
