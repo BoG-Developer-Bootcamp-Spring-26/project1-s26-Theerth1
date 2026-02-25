@@ -55,7 +55,7 @@ async function retrieveDisplayData(id) {
         "special-defense": data.stats[4].base_stat,
         "speed": data.stats[5].base_stat
     }
-    apiInfo["moves"] = data.moves.map(m => m.move.name)
+    apiInfo["moves"] = data.moves.map(m => m.move.name).slice(0, 20);
 
     nameBox.textContent = apiInfo["name"];
     nameBox.style.textAlign = "center";
@@ -65,7 +65,7 @@ async function retrieveDisplayData(id) {
 
     for (const type of apiInfo["types"]) {
         const typeTag = document.createElement("span");
-        typeTag.textContent = type.charAt(0).toUpperCase() + type.substring(1);
+        typeTag.textContent = type;
         typeTag.style.backgroundColor = colorMatch[type.charAt(0).toUpperCase() + type.substring(1)];
         typeTag.style.padding = "8px 16px";
         typeTag.style.borderRadius = "5px";
@@ -73,13 +73,32 @@ async function retrieveDisplayData(id) {
         typeBox.appendChild(typeTag);
     }
     if (info) {
-        for (let value of apiInfo["displayInfo"].entries()) {
+        details.innerHTML = "";
+
+        for (let [key, val] of Object.entries(apiInfo["displayInfo"])) {
             const valueItem = document.createElement("span");
+
+            if (key === "height") {
+                // Divide by 10 to convert 0.1m to meters
+                valueItem.innerHTML = `${key}: ${val / 10}m`;
+            } else if (key === "weight") {
+                // Divide by 10 to convert 0.1kg to kg
+                valueItem.innerHTML = `${key}: ${val / 10}kg`;
+            } else {
+                valueItem.innerHTML = `${key}: ${val}`;
+            }
             
+            details.append(valueItem);
         }
     } else if (moves) {
-        // display moves
-    }
+        details.innerHTML = "";
+
+        for (let move of apiInfo["moves"]) {
+            const valueItem = document.createElement("span");
+            valueItem.innerHTML = move;
+            details.append(valueItem);
+        }
+    }    
 }
 
 if (initial) {
@@ -108,7 +127,7 @@ infoButton.addEventListener('click', () => {
         infoButton.style.backgroundColor = "#7CFF79";
         movesButton.style.backgroundColor = "";
         title.innerHTML = "Info";
-        // need to change title to info and replace the display info
+        retrieveDisplayData(currId);
     }
 })
 
@@ -119,6 +138,6 @@ movesButton.addEventListener('click', () => {
         movesButton.style.backgroundColor = "#7CFF79";
         infoButton.style.backgroundColor = "";
         title.innerHTML = "Moves";
-        // need to change title to moves and replace the display info
+        retrieveDisplayData(currId);
     }
 })
